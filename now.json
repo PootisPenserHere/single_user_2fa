@@ -1,0 +1,7 @@
+{
+    "version": 2,
+    "name": "single_user_2fa",
+    "builds": [
+        { "src": "*.py", "use": "@now/python" }
+    ]
+}
