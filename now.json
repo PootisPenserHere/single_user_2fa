@@ -2,7 +2,7 @@
     "version": 2,
     "name": "single_user_2fa",
     "env": {
-        "SECRET": "123",
+        "SECRET": "@2fa_secret",
         "PHONE": "@user_phone_number"
     },
     "builds": [
