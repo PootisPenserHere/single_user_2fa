@@ -1,6 +1,10 @@
 {
     "version": 2,
     "name": "single_user_2fa",
+    "env": {
+        "SECRET": "123",
+        "PHONE": "@user_phone_number"
+    },
     "builds": [
         { "src": "*.py", "use": "@now/python" }
     ]
