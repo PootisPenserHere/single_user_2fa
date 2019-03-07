@@ -3,7 +3,10 @@
     "name": "single_user_2fa",
     "env": {
         "SECRET": "@2fa_secret",
-        "PHONE": "@user_phone_number"
+        "TWILLIO_ACCOUND_SID": "@twillio_account_sid",
+        "TWILLIO_AUTH_TOKEN": "@twillio_auth_token",
+        "TO_NUMBER": "@twillio_to_number",
+        "FROM_NUMBER": "@twillio_from_number"
     },
     "builds": [
         { "src": "*.py", "use": "@now/python" }

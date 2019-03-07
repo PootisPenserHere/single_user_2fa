@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler
+from twilio.rest import Client
 from dotenv import load_dotenv
 import os
 import base64
@@ -9,6 +10,11 @@ import struct
 
 # Loading the env properties into the system
 load_dotenv(".env")
+
+# Auth into twillio api
+account_sid = os.getenv("TWILLIO_ACCOUND_SID")
+auth_token = os.getenv("TWILLIO_AUTH_TOKEN")
+client = Client(account_sid, auth_token)
 
 
 class handler(BaseHTTPRequestHandler):
@@ -23,6 +29,13 @@ class handler(BaseHTTPRequestHandler):
         code = struct.unpack(">L", truncatedHash)[0]
         code &= 0x7FFFFFFF;
         code %= 1000000;
+
+        message = client.messages \
+            .create(
+            body=code,
+            from_=os.getenv("FROM_NUMBER"),
+            to=os.getenv("TO_NUMBER")
+        )
 
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
