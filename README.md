@@ -42,3 +42,7 @@ now secret rm acme-api-key
 ```
 
 For further reading **https://zeit.co/docs/v2/deployments/environment-variables-and-secrets/#securing-environment-variables-using-secrets**
+
+### TODO
+* Leading 0s in codes are omited by the algorithm
+    * This might also apply to trailing 0s

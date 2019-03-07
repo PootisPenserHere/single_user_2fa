@@ -7,6 +7,7 @@ import hashlib
 import hmac
 import time
 import struct
+from datetime import datetime
 
 # Loading the env properties into the system
 load_dotenv(".env")
@@ -37,8 +38,10 @@ class handler(BaseHTTPRequestHandler):
             to=os.getenv("TO_NUMBER")
         )
 
+        response = "The code has been sent at %s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        self.wfile.write(str(code).encode())
+        self.wfile.write(str(response).encode())
         return
