@@ -1,6 +1,5 @@
 from http.server import BaseHTTPRequestHandler
 from twilio.rest import Client
-from dotenv import load_dotenv
 import os
 import base64
 import hashlib
@@ -9,18 +8,15 @@ import time
 import struct
 from datetime import datetime
 
-# Loading the env properties into the system
-load_dotenv(".env")
-
-# Auth into twillio api
+# Setting up the credentials for twillio
 account_sid = os.getenv("TWILLIO_ACCOUND_SID")
 auth_token = os.getenv("TWILLIO_AUTH_TOKEN")
 client = Client(account_sid, auth_token)
 
 
 class handler(BaseHTTPRequestHandler):
-
     def do_GET(self):
+        # A new 2fa code will be generated based on the current timestamp
         tm = int(time.time() / 30)
         secret = base64.b32decode(str(os.getenv("SECRET")).encode())
         b = struct.pack(">q", tm)
@@ -31,8 +27,11 @@ class handler(BaseHTTPRequestHandler):
         code &= 0x7FFFFFFF;
         code %= 1000000;
 
+        # A custom message to be sent, this is mostly for aesthetic the code alone
+        # cen also be sent
         sms_message = "Your 2fa auth code is: %s" % code
 
+        # Sending the code over sms
         message = client.messages \
             .create(
             body=sms_message,
@@ -40,10 +39,18 @@ class handler(BaseHTTPRequestHandler):
             to=os.getenv("TO_NUMBER")
         )
 
-        response = "The code has been sent at %s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # Checking that the message was sent
+        if message.error_code is None:
+            response = "The code has been sent at %s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write(str(response).encode())
+            self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(str(response).encode())
+        else:
+            self.send_response(500)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(str("An error ocurred while attempting to send the sms.").encode())
+
         return
