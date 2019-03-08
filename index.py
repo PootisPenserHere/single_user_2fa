@@ -26,14 +26,16 @@ class handler(BaseHTTPRequestHandler):
         b = struct.pack(">q", tm)
         hm = hmac.HMAC(secret, b, hashlib.sha1).digest()
         offset = hm[-1] & 0x0F
-        truncatedHash = hm[offset:offset + 4]
-        code = struct.unpack(">L", truncatedHash)[0]
+        truncated_hash = hm[offset:offset + 4]
+        code = struct.unpack(">L", truncated_hash)[0]
         code &= 0x7FFFFFFF;
         code %= 1000000;
 
+        sms_message = "Your 2fa auth code is: %s" % code
+
         message = client.messages \
             .create(
-            body=code,
+            body=sms_message,
             from_=os.getenv("FROM_NUMBER"),
             to=os.getenv("TO_NUMBER")
         )
