@@ -28,10 +28,10 @@ class handler(BaseHTTPRequestHandler):
         code %= 1000000;
 
         # A custom message to be sent, this is mostly for aesthetic the code alone
-        # cen also be sent
-        sms_message = "Your 2fa auth code is: %s" % code
+        # can also be sent
+        sms_message = "Your 2fa code is: %s" % code
 
-        # Sending the code over sms
+        # Sending the code over sms with the Twillio api
         message = client.messages \
             .create(
             body=sms_message,
