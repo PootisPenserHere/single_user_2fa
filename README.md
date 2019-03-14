@@ -6,7 +6,7 @@ A serverless aproach to managing the two-factor authentication (2fa) tokens for 
 ### Prerequisites
 A zeit account will be needed to perform the deployments, if you're not registere a free account can be created [here.](https://zeit.co)
 
-To send the sms messages a Twilio account with its corresponding sid and auth token credentials [for further reading](https://www.twilio.com/sms)
+To send the sms a Twilio account with its corresponding sid and auth token credentials [for further reading](https://www.twilio.com/sms)
 
 **NOTE:** Although Twilio offers a free trial, after said period there will be chargers for the service in the form of a set price for each sms based on the destination country as well as the monthly rent of a phone number.
 
@@ -25,7 +25,7 @@ Actions such as deployment will require that zeit has been authenticated for the
 now login
 ```
 
-This process will ask the user to introduce their registered email and the to click on a verify email that they'll get.
+This process will ask the user to introduce their registered email and then to click on a verify link sent through the email that they'll get.
 
 
 ### Deploying
@@ -69,6 +69,7 @@ now secret add twillio_from_number yout_twillio_number_here
 
 ## Credit
 Credit goes to **Patrick Mylund Nielsen** for his [python implementation of the 2fa ](https://patrickmn.com/security/you-can-be-a-twofactor-hero/)
+
 ## TODO
 * Leading 0s in codes are omited by the algorithm
     * Likely happens with any number of continues leading zeros
