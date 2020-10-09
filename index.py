@@ -29,7 +29,7 @@ class handler(BaseHTTPRequestHandler):
 
         # A custom message to be sent, this is mostly for aesthetic the code alone
         # can also be sent
-        sms_message = "Your 2fa code is: %s" % code
+        sms_message = f"Your 2fa code is: {code.zfill(6)}"
 
         # Sending the code over sms with the Twillio api
         message = client.messages \
