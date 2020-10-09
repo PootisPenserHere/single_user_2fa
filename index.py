@@ -26,10 +26,13 @@ class handler(BaseHTTPRequestHandler):
         code = struct.unpack(">L", truncated_hash)[0]
         code &= 0x7FFFFFFF;
         code %= 1000000;
+        
+        # The code is converted to string and padded with zeros to the left
+        padded_token = str(code).zfill(6)
 
         # A custom message to be sent, this is mostly for aesthetic the code alone
         # can also be sent
-        sms_message = f"Your 2fa code is: {code.zfill(6)}"
+        sms_message = f"Your 2fa code is: {}"
 
         # Sending the code over sms with the Twillio api
         message = client.messages \
