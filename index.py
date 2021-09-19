@@ -24,7 +24,7 @@ class handler(BaseHTTPRequestHandler):
         
         # The code is converted to string and padded with zeros to the left
         padded_token = str(code).zfill(6)
-
+        
         # Sending the code over sms with the aws sns
         sns = boto3.resource(
             'sns',
@@ -38,5 +38,12 @@ class handler(BaseHTTPRequestHandler):
         topic.publish(
             Message=f"Your 2fa code is: {padded_token}"
         )
+
+        response = "The code has been sent at %s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(str(response).encode())
 
         return
