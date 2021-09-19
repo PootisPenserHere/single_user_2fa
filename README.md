@@ -13,16 +13,16 @@ To send the sms a Twilio account with its corresponding sid and auth token crede
 ### Installing now
 ```bash
 # yarn
-yarn global add now
+yarn global add vercel
 
 # npm
-npm install -g now
+npm i -g vercel
 ```
 
 ### Sing up in zeit
 Actions such as deployment will require that zeit has been authenticated for the current machine, it can be done with:
 ```bash
-now login
+vercel login
 ```
 
 This process will ask the user to introduce their registered email and then to click on a verify link sent through the email that they'll get.
@@ -31,7 +31,7 @@ This process will ask the user to introduce their registered email and then to c
 ### Deploying
 To deply a new version simply run the command:
 ```bash
-now
+vercel
 ```
 
 ## Personalizing
@@ -57,11 +57,11 @@ Once the environment has been set up it's time to set our credentials and authen
 
 Setting up the new secrets
 ```bash
-now secret add 2fa_secret 2fa_secret_here
-now secret add twillio_account_sid twillio_api_sid_here
-now secret add twillio_auth_token twillio_api_auth_here
-now secret add twillio_to_number destination_phone_here
-now secret add twillio_from_number yout_twillio_number_here
+vercel secret add 2fa_secret 2fa_secret_here
+vercel secret add twillio_account_sid twillio_api_sid_here
+vercel secret add twillio_auth_token twillio_api_auth_here
+vercel secret add twillio_to_number destination_phone_here
+vercel secret add twillio_from_number yout_twillio_number_here
 
 ```
 
