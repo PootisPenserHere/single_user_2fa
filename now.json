@@ -3,8 +3,8 @@
     "name": "single_user_2fa",
     "env": {
         "SECRET": "@2fa_secret",
-        "AWS_ACCESS_KEY": "@single_user_2fa_aws_access_key_id",
-        "AWS_SECRET_KEY": "@single_user_2fa_aws_secret_access_key",
+        "MFA_AWS_ACCESS_KEY": "@single_user_2fa_aws_access_key_id",
+        "MFA_AWS_SECRET_KEY": "@single_user_2fa_aws_secret_access_key",
         "SNS_TOPIC": "@single_user_2fa_sns_topic"
     },
     "builds": [
