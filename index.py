@@ -33,12 +33,12 @@ class handler(BaseHTTPRequestHandler):
         # Sending the code over sms with the aws sns
         sns = boto3.resource(
             'sns',
-            aws_access_key_id=os.getenv('single_user_2fa_aws_access_key_id'),
-            aws_secret_access_key=os.getenv('single_user_2fa_aws_secret_access_key'),
+            aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
+            aws_secret_access_key=os.getenv('AWS_SECRET_KEY'),
             region_name='us-east-1'
         )
 
-        topic = sns.Topic(os.getenv('single_user_2fa_sns_topic'))
+        topic = sns.Topic(os.getenv('SNS_TOPIC'))
 
         topic.publish(
             Message=f"Your 2fa code is: {padded_token}"

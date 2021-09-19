@@ -3,10 +3,9 @@
     "name": "single_user_2fa",
     "env": {
         "SECRET": "@2fa_secret",
-        "TWILLIO_ACCOUND_SID": "@twillio_account_sid",
-        "TWILLIO_AUTH_TOKEN": "@twillio_auth_token",
-        "TO_NUMBER": "@twillio_to_number",
-        "FROM_NUMBER": "@twillio_from_number"
+        "AWS_ACCESS_KEY": "@single_user_2fa_aws_access_key_id",
+        "AWS_SECRET_KEY": "@single_user_2fa_aws_secret_access_key",
+        "SNS_TOPIC": "@single_user_2fa_sns_topic"
     },
     "builds": [
         { "src": "*.py", "use": "@now/python" }
