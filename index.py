@@ -8,11 +8,6 @@ import struct
 import boto3
 from datetime import datetime
 
-# Setting up the credentials for twillio
-account_sid = os.getenv("TWILLIO_ACCOUND_SID")
-auth_token = os.getenv("TWILLIO_AUTH_TOKEN")
-client = Client(account_sid, auth_token)
-
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
