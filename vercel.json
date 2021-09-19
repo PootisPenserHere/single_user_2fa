@@ -10,5 +10,5 @@
     "builds": [
         { "src": "*.py", "use": "@now/python" }
     ],
-    "alias": "single_user_2fa.laziness.rocks"
+    "alias": "mfa.laziness.rocks"
 }
