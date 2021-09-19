@@ -1,11 +1,11 @@
 from http.server import BaseHTTPRequestHandler
-from twilio.rest import Client
 import os
 import base64
 import hashlib
 import hmac
 import time
 import struct
+import boto3
 from datetime import datetime
 
 # Setting up the credentials for twillio
@@ -30,30 +30,18 @@ class handler(BaseHTTPRequestHandler):
         # The code is converted to string and padded with zeros to the left
         padded_token = str(code).zfill(6)
 
-        # A custom message to be sent, this is mostly for aesthetic the code alone
-        # can also be sent
-        sms_message = f"Your 2fa code is: {padded_token}"
-
-        # Sending the code over sms with the Twillio api
-        message = client.messages \
-            .create(
-            body=sms_message,
-            from_=os.getenv("FROM_NUMBER"),
-            to=os.getenv("TO_NUMBER")
+        # Sending the code over sms with the aws sns
+        sns = boto3.resource(
+            'sns',
+            aws_access_key_id=os.getenv('single_user_2fa_aws_access_key_id'),
+            aws_secret_access_key=os.getenv('single_user_2fa_aws_secret_access_key'),
+            region_name='us-east-1'
         )
 
-        # Checking that the message was sent
-        if message.error_code is None:
-            response = "The code has been sent at %s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        topic = sns.Topic(os.getenv('single_user_2fa_sns_topic'))
 
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(str(response).encode())
-        else:
-            self.send_response(500)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(str("An error ocurred while attempting to send the sms.").encode())
+        topic.publish(
+            Message=f"Your 2fa code is: {padded_token}"
+        )
 
         return
